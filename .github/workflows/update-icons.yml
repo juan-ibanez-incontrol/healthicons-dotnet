@@ -58,9 +58,9 @@ jobs:
         if: steps.version.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
-          title: chore: update Health Icons to v${{ steps.version.outputs.latest }}
-          branch: automated/update-health-icons-${{ steps.version.outputs.latest }}
-          commit-message: chore: regenerate Health Icons from v${{ steps.version.outputs.latest }}
+          title: "chore: update Health Icons to v${{ steps.version.outputs.latest }}"
+          branch: "automated/update-health-icons-${{ steps.version.outputs.latest }}"
+          commit-message: "chore: regenerate Health Icons from v${{ steps.version.outputs.latest }}"
           body: |
             Automated update from `${{ steps.version.outputs.current }}` to `${{ steps.version.outputs.latest }}`.
 
