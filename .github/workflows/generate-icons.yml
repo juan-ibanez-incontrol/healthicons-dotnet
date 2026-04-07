@@ -1,0 +1,52 @@
+name: Generate Icons
+
+on:
+  workflow_dispatch:
+    inputs:
+      healthicons_version:
+        description: Health Icons npm version
+        required: true
+        default: latest
+  workflow_call:
+    inputs:
+      healthicons_version:
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install tool dependencies
+        working-directory: tools
+        run: npm install
+
+      - name: Install healthicons package
+        working-directory: tools
+        run: npm install --no-save healthicons@${{ inputs.healthicons_version || 'latest' }}
+
+      - name: Generate assets
+        working-directory: tools
+        run: npm run generate
+
+      - name: Update tracked source version
+        run: '${{ inputs.healthicons_version || 'latest' }}' | Out-File -FilePath "tools/.healthicons-version" -Encoding ascii
+        shell: pwsh
+
+      - name: Commit generated files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/.healthicons-version src/HealthIcons.Maui/Resources/Fonts src/HealthIcons.Maui/HealthIcons.Filled.cs src/HealthIcons.Maui/HealthIcons.Outline.cs
+          git diff --cached --quiet || git commit -m "chore: regenerate health icons"
+          git push
+

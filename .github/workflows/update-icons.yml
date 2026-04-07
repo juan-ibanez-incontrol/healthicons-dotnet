@@ -1,0 +1,63 @@
+name: Update Health Icons
+
+on:
+  schedule:
+    - cron: "0 6 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Check latest upstream version
+        id: version
+        shell: bash
+        run: |
+          latest=$(npm view healthicons version)
+          current=$(cat tools/.healthicons-version 2>/dev/null || echo none)
+          echo "latest=$latest" >> "$GITHUB_OUTPUT"
+          echo "current=$current" >> "$GITHUB_OUTPUT"
+          if [ "$latest" != "$current" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install dependencies
+        if: steps.version.outputs.changed == 'true'
+        working-directory: tools
+        run: npm install
+
+      - name: Install updated healthicons
+        if: steps.version.outputs.changed == 'true'
+        working-directory: tools
+        run: npm install healthicons@${{ steps.version.outputs.latest }}
+
+      - name: Generate updated assets
+        if: steps.version.outputs.changed == 'true'
+        working-directory: tools
+        run: npm run generate
+
+      - name: Update tracked source version
+        if: steps.version.outputs.changed == 'true'
+        shell: pwsh
+        run: '${{ steps.version.outputs.latest }}' | Out-File -FilePath "tools/.healthicons-version" -Encoding ascii
+
+      - name: Create pull request
+        if: steps.version.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          title: chore: update Health Icons to v${{ steps.version.outputs.latest }}
+          branch: automated/update-health-icons-${{ steps.version.outputs.latest }}
+          commit-message: chore: regenerate Health Icons from v${{ steps.version.outputs.latest }}
+          body: |
+            Automated update from `${{ steps.version.outputs.current }}` to `${{ steps.version.outputs.latest }}`.
+

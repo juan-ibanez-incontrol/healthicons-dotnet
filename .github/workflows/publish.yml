@@ -1,0 +1,43 @@
+name: Publish NuGet
+
+on:
+  release:
+    types: [ published ]
+
+jobs:
+  publish:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Install MAUI workload
+        run: dotnet workload install maui
+
+      - name: Pack release package
+        shell: pwsh
+        run: |
+          $version = "${env:GITHUB_REF_NAME}".TrimStart('v')
+          dotnet pack src\HealthIcons.Maui\HealthIcons.Maui.csproj -c Release -p:PackageVersion=$version -o artifacts
+
+      - name: Verify release package exists
+        shell: pwsh
+        run: |
+          $package = Get-ChildItem artifacts\*.nupkg | Where-Object { $_.Name -notlike '*.snupkg' } | Select-Object -First 1
+          if ($null -eq $package) {
+            throw 'Expected a release .nupkg package to be generated.'
+          }
+          Write-Host "Publishing package: $($package.FullName)"
+
+      - name: Push package
+        run: dotnet nuget push artifacts\*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nuget-package
+          path: |
+            artifacts\*.nupkg
+            artifacts\*.snupkg

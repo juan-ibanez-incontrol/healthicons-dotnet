@@ -1,0 +1,15 @@
+bin/
+obj/
+.vs/
+.vscode/
+TestResults/
+artifacts/
+.idea/
+node_modules/
+tools/node_modules/
+tools/temp/
+*.user
+*.suo
+*.nupkg
+*.snupkg
+
