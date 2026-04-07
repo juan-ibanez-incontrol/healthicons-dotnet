@@ -49,7 +49,10 @@ jobs:
       - name: Update tracked source version
         if: steps.version.outputs.changed == 'true'
         shell: pwsh
-        run: '${{ steps.version.outputs.latest }}' | Out-File -FilePath "tools/.healthicons-version" -Encoding ascii
+        env:
+          HEALTHICONS_VERSION: ${{ steps.version.outputs.latest }}
+        run: |
+          $env:HEALTHICONS_VERSION | Out-File -FilePath "tools/.healthicons-version" -Encoding ascii
 
       - name: Create pull request
         if: steps.version.outputs.changed == 'true'

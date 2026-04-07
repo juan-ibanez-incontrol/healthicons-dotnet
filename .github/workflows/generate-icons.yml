@@ -39,8 +39,11 @@ jobs:
         run: npm run generate
 
       - name: Update tracked source version
-        run: '${{ inputs.healthicons_version || 'latest' }}' | Out-File -FilePath "tools/.healthicons-version" -Encoding ascii
         shell: pwsh
+        env:
+          HEALTHICONS_VERSION: ${{ inputs.healthicons_version || 'latest' }}
+        run: |
+          $env:HEALTHICONS_VERSION | Out-File -FilePath "tools/.healthicons-version" -Encoding ascii
 
       - name: Commit generated files
         run: |
