@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:icons="clr-namespace:HealthIcons.Maui;assembly=HealthIcons.Maui"
+             x:Class="HealthIcons.Maui.Sample.Pages.XamlIconsPage"
+             Title="XAML">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16"
+                             Spacing="16">
+            <Label Text="Icons declared directly in XAML"
+                   Style="{StaticResource Headline}" />
+
+            <Label Text="The glyph and font alias both come from constants instead of hardcoded strings."
+                   Style="{StaticResource SubHeadline}" />
+
+            <Border Padding="16"
+                    StrokeShape="RoundRectangle 12">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Filled"
+                           FontAttributes="Bold" />
+
+                    <Image HeightRequest="72"
+                           WidthRequest="72"
+                           HorizontalOptions="Center">
+                        <Image.Source>
+                            <FontImageSource Glyph="{x:Static icons:Filled.BodyHeartOrgan}"
+                                             FontFamily="{x:Static icons:HealthIconFontAliases.Filled}"
+                                             Size="72" />
+                        </Image.Source>
+                    </Image>
+
+                    <Label Text="{x:Static icons:Filled.BodyHeartOrgan}"
+                           FontFamily="{x:Static icons:HealthIconFontAliases.Filled}"
+                           FontSize="20"
+                           HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Padding="16"
+                    StrokeShape="RoundRectangle 12">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Outline"
+                           FontAttributes="Bold" />
+
+                    <Image HeightRequest="72"
+                           WidthRequest="72"
+                           HorizontalOptions="Center">
+                        <Image.Source>
+                            <FontImageSource Glyph="{x:Static icons:Outline.BodyHeartOrgan}"
+                                             FontFamily="{x:Static icons:HealthIconFontAliases.Outline}"
+                                             Size="72" />
+                        </Image.Source>
+                    </Image>
+
+                    <Label Text="{x:Static icons:Outline.BodyHeartOrgan}"
+                           FontFamily="{x:Static icons:HealthIconFontAliases.Outline}"
+                           FontSize="20"
+                           HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

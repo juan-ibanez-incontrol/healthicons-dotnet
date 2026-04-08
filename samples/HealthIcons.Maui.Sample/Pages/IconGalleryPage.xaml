@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:HealthIcons.Maui.Sample.Models"
+             xmlns:viewModels="clr-namespace:HealthIcons.Maui.Sample.ViewModels"
+             x:Class="HealthIcons.Maui.Sample.Pages.IconGalleryPage"
+             x:DataType="viewModels:IconGalleryViewModel">
+
+    <Grid Padding="16"
+          RowDefinitions="Auto,*"
+          RowSpacing="16">
+        <Label Text="{Binding IconCountLabel}"
+               Style="{StaticResource SubHeadline}" />
+
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Icons}"
+                        ItemSizingStrategy="MeasureFirstItem"
+                        SelectionMode="None">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical"
+                                 Span="2"
+                                 VerticalItemSpacing="12"
+                                 HorizontalItemSpacing="12" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:IconItem">
+                    <Border Padding="12"
+                            StrokeShape="RoundRectangle 12">
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="{Binding Glyph}"
+                                   FontFamily="{Binding FontAlias}"
+                                   FontSize="32"
+                                   HorizontalOptions="Center"
+                                   HorizontalTextAlignment="Center" />
+
+                            <Label Text="{Binding Name}"
+                                   FontSize="12"
+                                   HorizontalTextAlignment="Center"
+                                   LineBreakMode="WordWrap"
+                                   MaxLines="2" />
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

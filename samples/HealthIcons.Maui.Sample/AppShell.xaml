@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="HealthIcons.Maui.Sample.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:HealthIcons.Maui.Sample.Pages"
+    FlyoutBehavior="Disabled"
+    Title="Health Icons Sample">
+
+    <TabBar>
+        <Tab Title="Filled">
+            <ShellContent
+                ContentTemplate="{DataTemplate pages:FilledIconsPage}"
+                Route="filled" />
+        </Tab>
+
+        <Tab Title="Outline">
+            <ShellContent
+                ContentTemplate="{DataTemplate pages:OutlineIconsPage}"
+                Route="outline" />
+        </Tab>
+
+        <Tab Title="XAML">
+            <ShellContent
+                ContentTemplate="{DataTemplate pages:XamlIconsPage}"
+                Route="xaml" />
+        </Tab>
+    </TabBar>
+
+</Shell>

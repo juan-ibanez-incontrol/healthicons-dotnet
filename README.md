@@ -33,6 +33,20 @@ var source = new FontImageSource
 };
 ```
 
+## Sample app
+
+A MAUI sample app lives in `samples\HealthIcons.Maui.Sample\`. It includes `Filled` and `Outline` gallery tabs that render all icons in a 2-column `CollectionView`, plus a `XAML` tab that declares one filled icon and one outline icon directly in XAML using constants for both the glyph and the font alias.
+
+The gallery does not keep a manual icon list. It reflects over the generated `Filled` and `Outline` constant fields at runtime, so regenerated icons appear automatically in the sample.
+
+On Windows, validate the sample from the CLI with:
+
+```powershell
+dotnet build samples\HealthIcons.Maui.Sample\HealthIcons.Maui.Sample.csproj -c Release -f net10.0-windows10.0.19041.0
+```
+
+To run the sample interactively, open `samples\HealthIcons.Maui.Sample\HealthIcons.Maui.Sample.csproj` in Visual Studio and start a supported MAUI target.
+
 ## Development
 
 Most generation is designed to run in GitHub Actions. Local runs are also supported from the `tools` folder.

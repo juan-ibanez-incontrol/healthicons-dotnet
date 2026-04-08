@@ -22,11 +22,17 @@ jobs:
       - name: Restore
         run: dotnet restore tests\HealthIcons.Maui.Tests\HealthIcons.Maui.Tests.csproj
 
+      - name: Restore sample
+        run: dotnet restore samples\HealthIcons.Maui.Sample\HealthIcons.Maui.Sample.csproj
+
       - name: Build tests
         run: dotnet build tests\HealthIcons.Maui.Tests\HealthIcons.Maui.Tests.csproj -c Release --no-restore
 
       - name: Build package
         run: dotnet build src\HealthIcons.Maui\HealthIcons.Maui.csproj -c Release --no-restore
+
+      - name: Build sample
+        run: dotnet build samples\HealthIcons.Maui.Sample\HealthIcons.Maui.Sample.csproj -c Release -f net10.0-windows10.0.19041.0 --no-restore
 
       - name: Test
         run: dotnet test tests\HealthIcons.Maui.Tests\HealthIcons.Maui.Tests.csproj -c Release --no-build
