@@ -10,7 +10,7 @@
     <IsPackable>true</IsPackable>
 
     <PackageId>HealthIcons.Maui</PackageId>
-    <Version>0.1.0</Version>
+    <Version>1.0.0</Version>
     <Authors>Juan Ibanez</Authors>
     <Company>Juan Ibanez</Company>
     <Description>Health Icons for .NET MAUI with embedded fonts and strongly typed glyph constants.</Description>
