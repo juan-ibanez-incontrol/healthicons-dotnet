@@ -1,8 +1,10 @@
 # healthicons-dotnet
 
+[![NuGet](https://img.shields.io/nuget/v/HealthIcons.Maui.svg)](https://www.nuget.org/packages/HealthIcons.Maui/)
+
 `HealthIcons.Maui` packages [Health Icons](https://github.com/resolvetosavelives/healthicons) for .NET 10 and .NET MAUI using embedded icon fonts plus strongly typed glyph constants.
 
-Public repository: https://github.com/juan-ibanez-incontrol/healthicons-dotnet
+NuGet package: https://www.nuget.org/packages/HealthIcons.Maui/
 
 ## Status
 
